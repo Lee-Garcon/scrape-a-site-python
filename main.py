@@ -15,7 +15,6 @@ while True:
   if r.status_code == 200:
 
     selfdir = os.path.dirname(os.path.realpath('__file__'))
-    print('selfdir: %s' % selfdir)
     dirname = url.replace('/', '-').replace('.', '-').replace(':', '_')
     print('name: %s' % join(selfdir, dirname))
     try:
@@ -35,11 +34,9 @@ while True:
     #print([link.get('href') for link in soup.find_all('a')])
 
     imgsrc = {}
-    print([link.get('src') for link in soup.find_all('img')])
     
     for x in [link.get('src') for link in soup.find_all('img')]:
       if not x:
-        print('==')
       elif x.startswith('http'):
         imgsrc[x] = x
       elif x.startswith('/'):
@@ -50,7 +47,6 @@ while True:
         imgsrc[x] = join(rootdir, x)
       else:
         imgsrc[x] = join(rootdir, x)
-      print('==PASS==')
 
     imgid = 0
     replacedict = {}
@@ -62,8 +58,6 @@ while True:
         imgurl = 'http:' + imgurl
       elif imgurl.startswith('/') and not imgurl.startswith('//'):
         imgurl = fullurl + imgurl
-        print('pass')
-        print('url: %s, %s' % (imgurl, fullurl))
 
       r = requests.get(imgurl)
       print(':%s' % imgsrc[link])
